@@ -12,8 +12,8 @@ function createFeatures(eqData) {
     function style(feature, mag){
         let circle = {
             radius: (feature.properties.mag)*5,
-            fillColor: "#FD0719",
-            color: "#F59648",
+            fillColor: "white",
+            color: "black",
             weight: .25,
             opacity: .75,
             fillOpacity: .5
