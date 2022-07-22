@@ -6,19 +6,19 @@ d3.json(url).then(function (data) {
 
 function createFeatures(eqData) {
     function onEachFeature(feature, layer) {
-        layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
+        layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}<br>Magnitude: ${feature.properties.mag}<br>Lat/Long: ${feature.geometry.coordinates[0]},${feature.geometry.coordinates[1]}<br>Depth: ${feature.geometry.coordinates[2]}</p>`);
       }
     
-    function style(feature){
-        var circle = {
-            radius: (feature.properties.mag),
-            fillColor: "white",
-            color: "black",
+    function style(feature, mag){
+        let circle = {
+            radius: (feature.properties.mag)*5,
+            fillColor: "#FD0719",
+            color: "#F59648",
             weight: .25,
             opacity: .75,
             fillOpacity: .5
         }
-        return circle
+        return L.circleMarker(mag,circle)
     }
     
     var eqs = L.geoJSON(eqData, {
