@@ -6,16 +6,37 @@ d3.json(url).then(function (data) {
 
 function createFeatures(eqData) {
     function onEachFeature(feature, layer) {
-        layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}<br>Magnitude: ${feature.properties.mag}<br>Lat/Long: ${feature.geometry.coordinates[0]},${feature.geometry.coordinates[1]}<br>Depth: ${feature.geometry.coordinates[2]}</p>`);
+        layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}<br>Magnitude: ${feature.properties.mag}<br>Lat/Long: ${feature.geometry.coordinates[0]} , ${feature.geometry.coordinates[1]}<br>Depth: ${feature.geometry.coordinates[2]}</p>`);
       }
     
+    function color(x){
+        switch(true) {
+            case (x < 5):
+                return "#FFFFFF";
+            case (x < 20):
+                return "#FFFF00";
+            case (x < 35):
+                return "#FFA54F";
+            case (x < 50):
+                return "#00CD66";
+            case (x < 65):
+                return "#7A67EE";
+            case (x < 80):
+                return "#548B54";
+            case (x < 95):
+                return "#27408B";
+            default:
+                return "black"
+        }
+    }
+
     function style(feature, mag){
         let circle = {
             radius: (feature.properties.mag)*5,
-            fillColor: "white",
+            fillColor: color(feature.geometry.coordinates[2]),
             color: "black",
             weight: .25,
-            opacity: .75,
+            opacity: 1,
             fillOpacity: .5
         }
         return L.circleMarker(mag,circle)
@@ -34,13 +55,13 @@ function createMap(eqs) {
         attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
     });
 
-    var baseMaps = {
-        "Topographic": topog
-    };
+    // var baseMaps = {
+    //     "Topographic": topog
+    // };
 
-    var overlayMaps = {
-        Earthquakes: eqs
-    };
+    // var overlayMaps = {
+    //     Earthquakes: eqs
+    // };
 
     var myMap = new L.Map("map", {center: [37.8, -96.9], zoom: 4, layers: [topog, eqs]});
     
