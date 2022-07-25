@@ -30,13 +30,15 @@ function createFeatures(eqData) {
         }
     }
 
+
+
     function style(feature, mag){
         let circle = {
             radius: (feature.properties.mag)*5,
             fillColor: color(feature.geometry.coordinates[2]),
             color: "black",
             weight: .25,
-            opacity: 1,
+            opacity: .60,
             fillOpacity: .5
         }
         return L.circleMarker(mag,circle)
@@ -64,10 +66,20 @@ function createMap(eqs) {
     // };
 
     var myMap = new L.Map("map", {center: [37.8, -96.9], zoom: 4, layers: [topog, eqs]});
-    
+
+    var legend = L.control({ position: "bottomright" });
+    legend.onAdd = function() {
+        var div = L.DomUtil.create("div", "info legend");
+        var limits = [5, 20, 35, 50, 65, 80, 95];
+        var colors = ["#FFFFFF", "#FFFF00", "#FFA54F", "#00CD66", "#7A67EE", "#548B54", "#27408B", "black"];
+        
+    };
+
+
+    legend.addTo(myMap);
     // L.control.layers(baseMaps, overlayMaps, {
     //     collapsed: false
     // }).addTo(myMap);
-}
+};
 
 // d3.json("").then(createMarkers);
