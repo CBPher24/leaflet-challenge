@@ -67,12 +67,17 @@ function createMap(eqs) {
 
     var myMap = new L.Map("map", {center: [37.8, -96.9], zoom: 4, layers: [topog, eqs]});
 
-    var legend = L.control({ position: "bottomright" });
+    var legend = L.control({ position: "bottomright", background: "white" });
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend");
-        var limits = [5, 20, 35, 50, 65, 80, 95];
+        var limits = ["<", 5, 20, 35, 50, 65, 80, 95, "<"];
         var colors = ["#FFFFFF", "#FFFF00", "#FFA54F", "#00CD66", "#7A67EE", "#548B54", "#27408B", "black"];
-        
+        div.innerHTML += "<h3 style='text-align: left'>Earthquake Depth</h3>"
+        for (var i =0; i < colors.length; i++) {
+            div.innerHTML += '<i style="background:' + colors[i] + '"></i><span>' + limits[i] + "-" + limits[i+1] + '</span><br>';
+          }
+
+            return div;
     };
 
 
