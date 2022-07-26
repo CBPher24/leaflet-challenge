@@ -30,8 +30,6 @@ function createFeatures(eqData) {
         }
     }
 
-
-
     function style(feature, mag){
         let circle = {
             radius: (feature.properties.mag)*5,
@@ -57,24 +55,16 @@ function createMap(eqs) {
         attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
     });
 
-    // var baseMaps = {
-    //     "Topographic": topog
-    // };
-
-    // var overlayMaps = {
-    //     Earthquakes: eqs
-    // };
-
     var myMap = new L.Map("map", {center: [37.8, -96.9], zoom: 4, layers: [topog, eqs]});
 
-    var legend = L.control({ position: "bottomright", background: "white" });
+    var legend = L.control({ position: "bottomright" });
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend");
         var limits = ["<", 5, 20, 35, 50, 65, 80, 95, "<"];
         var colors = ["#FFFFFF", "#FFFF00", "#FFA54F", "#00CD66", "#7A67EE", "#548B54", "#27408B", "black"];
         div.innerHTML += "<h3 style='text-align: left'>Earthquake Depth</h3>"
         for (var i =0; i < colors.length; i++) {
-            div.innerHTML += '<i style="background:' + colors[i] + '"></i><span>' + limits[i] + "-" + limits[i+1] + '</span><br>';
+            div.innerHTML += '<i style="background: ' + colors[i] + '"></i><span>' + limits[i] + " - " + limits[i+1] + '</span><br>';
           }
 
             return div;
@@ -82,9 +72,4 @@ function createMap(eqs) {
 
 
     legend.addTo(myMap);
-    // L.control.layers(baseMaps, overlayMaps, {
-    //     collapsed: false
-    // }).addTo(myMap);
 };
-
-// d3.json("").then(createMarkers);
